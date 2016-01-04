@@ -1,12 +1,12 @@
-function varargout = vectorize(varargin)
-%VECTORIZE Takes any number of matrices and vectorize them into a single column vector
-%   vectorize(a, b, c) where a, b and c are matrices of any dimensions will return a (n + 1) output values where the
+function varargout = linearize(varargin)
+%LINEARIZE Takes any number of matrices and linearize them into a single column vector
+%   linearize(a, b, c) where a, b and c are matrices of any dimensions will return a (n + 1) output values where the
 %   first one is the linearized column vector as a result of concatenating all the elements from all of the input
-%   matrices, and the subsequent n values will be function handles to "unvectorize" that big column vector.
+%   matrices, and the subsequent n values will be function handles to "un-linearize" that big column vector.
 %
 %   Therefore,
 %
-%       > [big_vec fa fb fc] = vectorize(a, b, c);
+%       > [big_vec fa fb fc] = linearize(a, b, c);
 %
 %   where column_vec contains all the elements from "a", "b" and "c" concatenated together will give us:
 %
@@ -14,12 +14,11 @@ function varargout = vectorize(varargin)
 %       > fb(big_vec) == b
 %       > fc(big_vec) == c
 %
-%   so that "fa", "fb" and "fc" are functions that are able to "unvectorize" "big_vec" into the original matrices "a",
+%   so that "fa", "fb" and "fc" are functions that are able to "un-linearize" "big_vec" into the original matrices "a",
 %   "b" and "c", respectively.
 
 big_vector = [];
 L = length(varargin);
-unvectorize_array = cell(1, L);
 cumulative_index = 1;
 
 for i = 1:L
